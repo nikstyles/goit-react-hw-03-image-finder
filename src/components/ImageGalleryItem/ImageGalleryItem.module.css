@@ -1,0 +1,28 @@
+.item {
+  width: calc(100% - 20px);
+}
+
+@media (min-width: 768px) {
+  .item {
+    width: calc(100% / 3 - 20px);
+  }
+}
+
+@media (min-width: 1280px) {
+  .item {
+    width: calc(100% / 4 - 20px);
+  }
+}
+
+.imageGalleryItem_image {
+  height: 220px;
+  width: 100%;
+  object-fit: cover;
+  transform: scale(1);
+  transition: transform 250ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.imageGalleryItem_image:hover {
+  transform: scale(1.03);
+  cursor: zoom-in;
+}
