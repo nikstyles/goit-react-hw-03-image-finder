@@ -37,24 +37,26 @@ export default class Searchbar extends Component {
   render() {
     return (
       <>
-        <header className={s.searchbar}>
-          <form className={s.searchForm} onSubmit={this.handleSubmit}>
-            <button type="submit" className={s.searchForm_button}>
-              <span className={s.searchForm_button_label}>
-                <ImSearch size={14} />
-              </span>
-            </button>
+        <header>
+          <div className={s.searchbar}>
+            <form className={s.searchForm} onSubmit={this.handleSubmit}>
+              <button type="submit" className={s.searchForm_button}>
+                <span className={s.searchForm_button_label}>
+                  <ImSearch size={14} />
+                </span>
+              </button>
 
-            <input
-              className={s.searchForm_input}
-              type="text"
-              autoComplete="off"
-              autoFocus
-              placeholder="Search images and photos"
-              value={this.state.name}
-              onChange={this.inputChange}
-            />
-          </form>
+              <input
+                className={s.searchForm_input}
+                type="text"
+                autoComplete="off"
+                autoFocus
+                placeholder="Search images and photos"
+                value={this.state.name}
+                onChange={this.inputChange}
+              />
+            </form>
+          </div>
         </header>
         <ToastContainer
           theme="colored"

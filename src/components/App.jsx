@@ -5,7 +5,6 @@ import FetchImages from '../axiosCongif';
 import Button from './Button/Button';
 import Loader from './Loader/Loader';
 import Modal from './Modal/Modal';
-import ImageGalleryItem from './ImageGalleryItem/ImageGalleryItem';
 import s from './App.module.css';
 
 export default class App extends Component {
@@ -23,23 +22,21 @@ export default class App extends Component {
     const name = this.state.name;
     const page = this.state.page;
     if (prevState.name !== name || prevState.page !== page) {
-      setTimeout(() => {
-        FetchImages(name, page)
-          .then(res => {
-            this.setState(prev => ({
-              searchResults:
-                page === 1
-                  ? res.data.hits
-                  : [...prev.searchResults, ...res.data.hits],
-              status: 'resolved',
-              totalPages: res.data.total,
-            }));
-          })
-          .catch(error => console.log(error))
-          .finally(() => {
-            if (page === 1) window.scrollTo(0, 0);
-          });
-      }, 1000);
+      FetchImages(name, page)
+        .then(res => {
+          this.setState(prev => ({
+            searchResults:
+              page === 1
+                ? res.data.hits
+                : [...prev.searchResults, ...res.data.hits],
+            status: 'resolved',
+            totalPages: Math.ceil(res.data.totalHits / 12),
+          }));
+        })
+        .catch(error => console.log(error))
+        .finally(() => {
+          if (page === 1) window.scrollTo(0, 0);
+        });
     }
   }
 
@@ -71,15 +68,14 @@ export default class App extends Component {
       <div>
         <Searchbar onSubmit={getSubmitName} />
         {totalPages === 0 && <p className={s.text}>Enter the correct name</p>}
-        <ImageGallery>
-          <ImageGalleryItem
-            searchResults={searchResults}
-            toggle={handleToggleModal}
-            openModal={openModal}
-          />
-        </ImageGallery>
+        <ImageGallery
+          searchResults={searchResults}
+          toggle={handleToggleModal}
+          openModal={openModal}
+        />
+
         {totalPages !== 0 &&
-          this.state.page !== this.state.totalpages &&
+          this.state.page !== totalPages &&
           status === 'resolved' && <Button onClick={loadMore} />}
 
         {status === 'pending' && <Loader />}
