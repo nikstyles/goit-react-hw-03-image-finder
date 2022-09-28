@@ -53,8 +53,8 @@ export default class App extends Component {
   };
 
   openModal = idName => {
-    const { content } = this.state;
-    const URL = content.find(({ id }) => id === idName);
+    const { searchResults } = this.state;
+    const URL = searchResults.find(({ id }) => id === idName);
     this.setState({ url: URL?.largeImageURL });
   };
 
@@ -83,7 +83,11 @@ export default class App extends Component {
           status === 'resolved' && <Button onClick={loadMore} />}
 
         {status === 'pending' && <Loader />}
-        {showModal && <Modal getFind={url} onClose={handleToggleModal} />}
+        {showModal && (
+          <Modal getFind={url} onClose={handleToggleModal}>
+            <img src={this.state.url} alt="" />
+          </Modal>
+        )}
       </div>
     );
   }

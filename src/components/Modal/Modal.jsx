@@ -13,14 +13,14 @@ export default class Modal extends Component {
 
   handleKeyUp = e => {
     if (e.code === 'Escape') {
-      this.props.onCloseRequest();
+      this.props.onClose();
       window.removeEventListener('keyup', this.handleKeyUp, false);
     }
   };
 
   handleOutsideClick = e => {
     if (e.target === e.currentTarget) {
-      this.props.onCloseRequest();
+      this.props.onClose();
     }
   };
 
@@ -35,5 +35,5 @@ export default class Modal extends Component {
 
 Modal.propTypes = {
   children: PropTypes.node,
-  onCloseRequest: PropTypes.func.isRequired,
+  onClose: PropTypes.func.isRequired,
 };
